@@ -1,0 +1,64 @@
+Longest Increasing Subsequence
+medium
+
+Tags
+
+Companies
+
+Hints
+Given an integer array nums, find the length of the longest subsequence in which the values strictly increase from left to right. You may skip elements, but the relative order of the chosen elements must remain the same as in the original array.
+
+Example A:
+
+Input: nums = [10, 9, 2, 5, 3, 7, 101, 18]
+Output: 4
+Explanation: One longest increasing subsequence is [2, 3, 7, 101], which has length 4.
+Example B:
+
+Input: nums = [0, 1, 0, 3, 2, 3]
+Output: 4
+Example C:
+
+Input: nums = [7, 7, 7, 7, 7, 7, 7]
+Output: 1
+Your task is to compute only the length of such a longest increasing subsequence.
+
+Constraints
+1 <= nums.length <= 10^5
+
+-10^9 <= nums[i] <= 10^9
+
+Expected time complexity: O(n log n)
+
+Expected auxiliary space: O(n)
+
+Submissions 7
+
+Acceptance Rate 42.9%class Solution {
+  lengthOfLIS(nums: number[]): number {
+    const tails: number[] = [];
+
+    for (const num of nums) {
+      let left = 0;
+      let right = tails.length;
+
+      while (left < right) {
+        const mid = Math.floor((left + right) / 2);
+
+        if (tails[mid] < num) {
+          left = mid + 1;
+        } else {
+          right = mid;
+        }
+      }
+
+      if (left === tails.length) {
+        tails.push(num);
+      } else {
+        tails[left] = num;
+      }
+    }
+
+    return tails.length;
+  }
+}
