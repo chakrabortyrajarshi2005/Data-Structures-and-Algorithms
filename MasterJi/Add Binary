@@ -1,0 +1,75 @@
+Add Binary
+Accepted
+easy
+
+Tags
+
+Companies
+
+Hints
+Given two binary strings a and b, compute their sum and return it as a binary string.
+
+The addition follows the usual binary addition rules: each character is either '0' or '1'. Starting from the least‑significant (rightmost) position, add the corresponding bits together along with any carry from the previous step. The result bit for that position is sum % 2 and the new carry is sum / 2 (integer division). Continue this process moving leftward through both strings. If a carry remains after processing all positions, prepend it to the result.
+
+Example 1:
+
+Input: a = "11", b = "1"
+Output: "100"
+Explanation: Binary 11 (3) plus 1 (1) equals 100 (4).
+
+Example 2:
+
+Input: a = "1010", b = "1011"
+Output: "10101"
+Explanation: Binary 1010 (10) plus 1011 (11) equals 10101 (21).
+
+Example 3:
+
+Input: a = "0", b = "0"
+Output: "0"
+Explanation: Adding two zeros yields zero.
+
+The resulting string should not contain leading zeros unless the answer itself is exactly "0".
+
+Constraints
+1 <= a.length, b.length <= 10^4
+
+a and b consist only of characters '0' and '1'
+
+The strings do not contain leading zeros unless the string is exactly "0"
+
+Submissions 83
+
+Acceptance Rate 20.5%class Solution {
+  /**
+   * Adds two binary strings and returns their sum as a binary string.
+   * @param {string} a - first binary string
+   * @param {string} b - second binary string
+   * @returns {string} binary representation of the sum
+   */
+  addBinary(a, b) {
+    let i = a.length - 1;
+    let j = b.length - 1;
+    let carry = 0;
+    let result = [];
+
+    while (i >= 0 || j >= 0 || carry > 0) {
+      let sum = carry;
+
+      if (i >= 0) {
+        sum += a[i] === '1' ? 1 : 0;
+        i--;
+      }
+
+      if (j >= 0) {
+        sum += b[j] === '1' ? 1 : 0;
+        j--;
+      }
+
+      result.push(sum % 2 === 1 ? '1' : '0');
+      carry = Math.floor(sum / 2);
+    }
+
+    return result.reverse().join('');
+  }
+}
